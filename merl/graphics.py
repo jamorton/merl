@@ -10,10 +10,6 @@ class Console(object):
 	def __init__(self, tilesx, tilesy, posx, posy):
 		self.tilesx = tilesx
 		self.tilesy = tilesy
-		self.width  = self.CHAR_WIDTH * tilesx
-		self.height = self.CHAR_HEIGHT * tilesy
-		self.x = posx
-		self.y = posy
 		
 		self.font = pyglet.image.load(data_path("tiles.png")).get_texture()
 		self.ch_tex = Texture(tilesx, tilesy, GL_RED, GL_UNSIGNED_BYTE)
@@ -32,11 +28,11 @@ class Console(object):
 		self.shader.unbind()
 		
 		self.batch = pyglet.graphics.Batch()
-		w = self.width; h = self.height
+		w = tilesx * self.CHAR_WIDTH; h = tilesy * self.CHAR_HEIGHT
 		self.batch.add(
 			4, GL_QUADS, None,
-			("v2f", (posx, posy, posx+w, posy, posx+w, posy+h, posx, posy+h)),
-			("t2f", (0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0))
+			("v2f/static", (posx, posy, posx+w, posy, posx+w, posy+h, posx, posy+h)),
+			("t2f/static", (0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0))
 		)
 
 	def render(self, chars, fg, bg):
@@ -68,28 +64,28 @@ class Console(object):
 
 		glBindTexture(GL_TEXTURE_2D, 0)
 		glActiveTexture(GL_TEXTURE0)
+
+if __name__ == "__main__":
+
+	window = pyglet.window.Window(800, 600, caption="Graphics")
+	con = Console(75, 40, 20, 75)
+
+	fps_display = pyglet.clock.ClockDisplay()
+	
+	chars = [random.randint(1,255) for i in range(75*40)]
+	fcols = [random.randint(1,255) for i in range(75*40 * 3)]
+	bcols = [random.randint(1,40) for i in range(75*40 * 3)]
+	
+	@window.event
+	def on_draw():
+		pass
+	
+	def update(dt):
+		window.clear()
+		con.render(chars, fcols, bcols)
+		fps_display.draw()
 		
-window = pyglet.window.Window(800, 600, caption="Graphics")
-con = Console(75, 40, 20, 75)
-
-fps_display = pyglet.clock.ClockDisplay()
-
-chars = [random.randint(1,255) for i in range(75*40)]
-
-fcols = [random.randint(1,255) for i in range(75*40 * 3)]
-
-bcols = [random.randint(1,40) for i in range(75*40 * 3)]
-
-@window.event
-def on_draw():
-	pass
-
-def update(dt):
-	window.clear()
-	con.render(chars, fcols, bcols)
-	fps_display.draw()
-
-
-pyglet.clock.schedule(update)
-pyglet.app.run()
+	
+	pyglet.clock.schedule(update)
+	pyglet.app.run()
 
