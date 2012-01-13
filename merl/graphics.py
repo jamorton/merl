@@ -25,6 +25,7 @@ class Console(object):
 		self.shader.uniformf("potsize", self.ch_tex.pot_width, self.ch_tex.pot_height)
 		self.shader.uniformf("fontscale", self.font.tex_coords[6], self.font.tex_coords[7])
 		self.shader.uniformf("fontbg", 1.0, 0.0, 1.0)
+		self.shader.uniformf("nchars", 16.0, 16.0)
 		self.shader.unbind()
 		
 		self.batch = pyglet.graphics.Batch()

@@ -6,7 +6,6 @@ class Trait(object):
 	def __init__(self, key, name):
 		self.key   = key
 		self.name  = name
-		self.scale = int(random.random() * 100 + 1)
 
 class Rules(object):
 	def __init__(self):
