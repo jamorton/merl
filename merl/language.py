@@ -3,28 +3,61 @@ from util import random, data_path
 import re
 import os
 
+#################################################
+#### DATA DEFINITIONS
+#################################################
+
 def _load_data(fn):
 	data = []
 	o = open(data_path(fn))
 	for w in re.split("\s+", o.read()):
-		data.append(w.lower().strip())
+		if len(w) > 0:
+			data.append(w.lower().strip())
 	o.close()
-	return list(set(data))
-	
-adjectives = _load_data("adjectives.txt")
-prefixes   = _load_data("name_prefixes.txt")
+	return list(set(data))	
 
+class _LangData(object):
+	def __init__(self, filename):
+		self.init()
+		f = open(data_path(filename))
+		self.all = []
+		self.tags = {}
+		for line in f.readlines():
+			if len(line.strip()) == 0:
+				continue
+			parts = line.split("|")
+			w = self.add_word(parts[0].strip().split(":"))
+			self.all.append(w)
+			if len(parts) == 2:
+				for tag in parts[1].strip().split():
+					self.tags.setdefault(tag, []).append(w)
+		f.close()
+
+	def init(self):
+		pass
+
+	def add_word(self, parts):
+		raise Error()
+
+	def random(self):
+		return random.choice(self.all)
+	def random_tag(self, tag):
+		if tag not in self.tags:
+			return ""
+		return random.choice(self.tags[tag])
+
+		
 class _Noun(object):
 	_VOWELS = set(["a", "e", "i", "o", "u"])
-	def __init__(self, sing, plural):
-		self.is_countable = plural != None
+	def __init__(self, sing, plural = None):
+		self.is_countable = True
+		if plural is None:
+			self.is_countable = False
+			plural = sing
 		self.singular     = sing
 		self.plural       = plural
-		
-		if sing[0] in _Noun._VOWELS:
-			self.vowel = True
-		else:
-			self.vowel = False
+
+		self.vowel = True if sing[0] in self._VOWELS else False
 		
 	def singular_article(self):
 		if not self.is_countable:
@@ -33,39 +66,38 @@ class _Noun(object):
 			return "an " + self.singular
 		return "a " + self.singular
 		
-	def plural_article(self):
-		if not self.is_countable:
-			return self.singular
-		return self.plural
-		
-class _Nouns(object):
-	def __init__(self, words):
+class _Nouns(_LangData):
+	def init(self):
 		self.countable = []
 		self.uncountable = []
-		self.all = []
 		
-		for elem in words:
-			parts = elem.split(":")
-			if len(parts) == 1:
-				n = _Noun(elem, None)
-				self.all.append(n)
-				self.uncountable.append(n)
-			else:
-				n = _Noun(parts[0], parts[1])
-				self.all.append(n)
-				self.countable.append(n)
-		
-	def random(self):
-		return random.choice(self.all)
+	def add_word(self, parts):
+		n = _Noun(*parts)
+		if n.is_countable: self.countable.append(n)
+		else:              self.uncountable.append(n)
+		return n
+
 	def random_countable(self):
 		return random.choice(self.countable)
 	def random_uncountable(self):
 		return random.choice(self.uncountable)
 		
-nouns = _Nouns(_load_data("nouns.txt"))
-
-############################################################
-
+class _Verb(object):
+	def __init__(self, parts):
+		self.pres_singular = parts[0]
+		self.pres_plural   = parts[1]
+		self.pres_particip = parts[2]
+		self.past          = parts[3]
+		self.past_particip = parts[4]
+		
+class _Verbs(_LangData):
+	def add_word(self, parts):
+		return _Verb(parts)
+	
+#################################################
+#### LANGUAGE GENERATION
+#################################################
+	
 class MarkovGenerator(object):
 	def __init__(self, order):
 		self.order = order
@@ -101,12 +133,9 @@ def create_generator(fn, order):
 		mk.add_series(k)
 	return mk
 
-_markov_names = create_generator("names.txt", 3)
-
 ############################################################
 
 class Fragment(object):
-
 	def __init__(self, *args, **kwargs):
 		self.data = args
 		self.kwargs = kwargs
@@ -118,7 +147,7 @@ class Fragment(object):
 		return joiner.join(self.string(x, args) for x in self.data).strip()
 
 	def string(self, m, args):
-		if type(m) == str:
+		if isinstance(m, basestring):
 			if self.kwargs.get("cap", False):
 				return m.capitalize()
 			return m
@@ -130,9 +159,10 @@ class Fragment(object):
 class Phrase(Fragment):
 	pass
 
-class String(Fragment):
-	def evaluate(self, args):
-		return self.data
+class Concat(Fragment):
+	def __init__(self, *args, **kwargs):
+		kwargs["nospaces"] = True
+		Fragment.__init__(self, *args, **kwargs)
 
 class Optional(Fragment):
 	def evaluate(self, args):
@@ -143,40 +173,80 @@ class Optional(Fragment):
 
 class Choice(Fragment):
 	def evaluate(self, args):
+		if len(self.data) == 1 and hasattr(self.data[0], "__getitem__"):
+			return self.string(random.choice(self.data[0]), args)
 		return self.string(random.choice(self.data), args)
 
 class Argument(Fragment):
 	def evaluate(self, args):
 		return args[self.data[0]]
 
-class Markov(Fragment):
-	def evaluate(self, args):
-		return "".join(self.data[0].random())
-		
 class Filter(Fragment):
 	def evaluate(self, args):
 		return self.kwargs["func"](self.string(self.data[0], args))
-		
-class RandomNoun(Fragment):
-	def evaluate(self, args):
-		return nouns.random().singular
-		
-############################################################
 
-_name_word = Filter(Markov(_markov_names), func=lambda x: x[:7].capitalize())
+class Func(Fragment):
+	def evaluate(self, args):
+		return self.data[0]()
+		
+#################################################
+#### USAGES
+#################################################
+
+markov_names = None
+nouns        = None
+adjectives   = None
+prefixes     = None
+verbs        = None
+
+def compile():
+	global markov_names, nouns, adjectives, prefixes, verbs
+	markov_names = create_generator("lang/names.txt", 3)
+	nouns        = _Nouns("lang/nouns.txt")
+	adjectives   = _load_data("lang/adjectives.txt")
+	prefixes     = _load_data("lang/name_prefixes.txt")
+	verbs        = _Verbs("lang/verbs.txt")
+
+	
+
+#################################################
+
+_noun = Func(lambda: nouns.random().singular)
+
+# Names
+_rname = Func(lambda: "".join(markov_names.random())[:7].capitalize())
+_radjective = Func(lambda: random.choice(adjectives).capitalize())
+_rprefix    = Func(lambda: random.choice(prefixes).capitalize())
 random_name = Choice(
 	Phrase(
-		Choice(*prefixes, cap=True),
+		_rprefix,
 		Choice(
-			Phrase(Choice(*adjectives, cap=True), RandomNoun(), nospaces=True),
-			_name_word,
-			Choice(*adjectives, cap=True)
+			Concat(_radjective, _noun),
+			_rname,
+			_radjective
 		),
 	),
-	Phrase(_name_word, _name_word),
-	Phrase(_name_word, "the", Choice(*adjectives, cap=True))
+	Phrase(_rname, _rname),
+	Phrase(_rname, "the", _radjective)
 )
-############################################################
 
+# Items
+item_name = Choice(
+	Phrase(
+		Func(lambda: nouns.random().singular.capitalize()),
+		"of",
+		Func(lambda: verbs.random().pres_particip.capitalize())
+	),
+	Phrase(
+		_radjective,
+		Func(lambda: nouns.random().singular.capitalize())
+	),
+	Phrase(
+		Func(lambda: verbs.random().past.capitalize()),
+		Func(lambda: nouns.random().singular.capitalize())
+	)
+)
 
-print nouns.random_countable().singular_article()
+if __name__ == "__main__":
+	compile()
+	print item_name()

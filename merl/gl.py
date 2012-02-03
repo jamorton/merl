@@ -46,15 +46,22 @@ class Shader(object):
 		temp = c_int(0)
 		glGetShaderiv(shader, GL_COMPILE_STATUS, byref(temp))
 
-
 		if not temp:
 			glGetShaderiv(shader, GL_INFO_LOG_LENGTH, byref(temp))
 			buffer = create_string_buffer(temp.value)
 			glGetShaderInfoLog(shader, temp, None, buffer)
 			print buffer.value
 		else:
-			glAttachShader(self.handle, shader);
+			glAttachShader(self.handle, shader)
+			# flag for deletion, won't actually diseapper until __del__
+			glDeleteShader(shader) # flag for deletion, won't
 
+	def __del__(self):
+		try:
+			glDeleteProgram(self.handle)
+		except:
+			pass
+			
 	def _link(self):
 		glLinkProgram(self.handle)
 
@@ -88,7 +95,7 @@ class Shader(object):
 		"""
 		send a float uniform to the shader. accepts 1-5 values
 		"""
-		if 0 < len(vals) < 5: 
+		if 0 < len(vals) < 5:
 			self.UNIFORMF_FUNCS[len(vals)](glGetUniformLocation(self.handle, name), *vals)
 
 	def uniformi(self, name, *vals):
@@ -127,7 +134,13 @@ class Texture(object):
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mag_filter)
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, self.pot_width, self.pot_height, 0, tex_format, data_format, 0)
 		self.unbind()
-		
+
+	def __del__(self):
+		try:
+			glDeleteTextures(1, byref(self.id))
+		except:
+			pass
+			
 	def bind(self):
 		glBindTexture(GL_TEXTURE_2D, self.id)
 

@@ -1,0 +1,127 @@
+bite:bites:biting:bit:bitten | TRANS INTRANS
+chew:chews:chewing:chewed:chewed | TRANS INTRANS
+make:makes:making:made:made | TRANS INTRANS
+thrust:thrusts:thrusting:thrusted:thrusted | TRANS INTRANS
+eat:eats:eating:ate:eaten | TRANS INTRANS
+break:breaks:breaking:broke:broken | TRANS INTRANS
+burn:burns:burning:burned:burned | TRANS INTRANS
+bury:buries:burying:buried:buried | TRANS INTRANS
+cackle:cackles:cackling:cackled:cackled | INTRANS
+write:writes:writing:wrote:written | TRANS INTRANS
+chant:chants:chanting:chanted:chanted | TRANS INTRANS
+chill:chills:chilling:chilled:chilled | TRANS INTRANS
+chirp:chirps:chirping:chirped:chirped | INTRANS
+chop:chops:chopping:chopped:chopped | TRANS INTRANS
+choke:chokes:choking:choked:choked | TRANS INTRANS
+fight:fights:fighting:fought:fought | TRANS INTRANS
+clap:claps:clapping:clapped:clapped | INTRANS
+cleave:cleaves:cleaving:cleaved:cleaved | TRANS INTRANS
+pull:pulls:pulling:pulled:pulled | TRANS INTRANS
+kill:kills:killing:killed:killed | TRANS INTRANS
+drop:drops:dropping:dropped:dropped | TRANS INTRANS
+shoot:shoots:shooting:shot:shot | TRANS INTRANS
+rake:rakes:raking:raked:raked | TRANS INTRANS
+ride:rides:riding:rode:rode | TRANS INTRANS
+love:loves:loving:loved:loved | TRANS INTRANS
+ruin:ruins:ruining:ruined:ruined | TRANS INTRANS
+run:runs:running:ran:ran | INTRANS
+give:gives:giving:gave:given | TRANS INTRANS
+fornicate:fornicates:fornicating:fornicated:fornicated | INTRANS
+see:sees:seeing:saw:seen | TRANS INTRANS
+boil:boils:boiling:boiled:boiled | TRANS INTRANS
+cough:coughs:coughing:coughed:coughed | INTRANS
+carve:carves:carving:carved:carved | TRANS INTRANS
+beg:begs:begging:begged:begged | TRANS INTRANS
+coil:coils:coiling:coiled:coiled | TRANS INTRANS
+drip:drips:dripping:dripped:dripped | INTRANS
+explode:explodes:exploding:exploded:exploded | TRANS INTRANS
+decay:decays:decaying:decayed:decayed | INTRANS
+damage:damages:damaging:damaged:damaged | TRANS INTRANS
+cry:cries:crying:cried:cried | INTRANS
+disarm:disarms:disarming:disarmed:disarmed | TRANS INTRANS
+dance:dances:dancing:danced:danced | INTRANS
+cleave:cleaves:cleaving:cleaved:cleaved | TRANS INTRANS
+fail:fails:failing:failed:failed | TRANS INTRANS
+glow:glows:glowing:glowed:glowed | INTRANS
+fly:flies:flying:flew:flown | INTRANS
+travel:travels:traveling:traveled:traveled | TRANS INTRANS
+murder:murders:murdering:murdered:murdered | TRANS INTRANS
+light:lights:lighting:lit:lit | TRANS INTRANS
+ignite:ignites:igniting:ignited:ignited | TRANS INTRANS
+start:starts:starting:started:started | TRANS INTRANS
+defecate:defecates:defecating:defecated:defecated | TRANS INTRANS
+purge:purges:purging:purged:purged | TRANS INTRANS
+drink:drinks:drinking:drank:drunk | TRANS INTRANS
+sip:sips:sipping:sipped:sipped | TRANS INTRANS
+act:acts:acting:acted:acted | INTRANS
+age:ages:aging:aged:aged | TRANS INTRANS
+bald:balds:balding:balded:balded | TRANS INTRANS
+bake:bakes:baking:baked:baked | TRANS INTRANS
+bathe:bathes:bathing:bathed:bathed | TRANS INTRANS
+blind:blinds:blinding:blinded:blinded | TRANS INTRANS
+bother:bothers:bothering:bothered:bothered | TRANS INTRANS
+clobber:clobbers:clobbering:clobbered:clobbered | TRANS INTRANS
+cook:cooks:cooking:cooked:cooked | TRANS INTRANS
+cover:covers:covering:covered:covered | TRANS INTRANS
+creep:creeps:creeping:crept:crept | INTRANS
+crumble:crumbles:crumbling:crumbled:crumbled | TRANS INTRANS
+crush:crushes:crushing:crushed:crushed | TRANS INTRANS
+cuddle:cuddles:cuddling:cuddled:cuddled | TRANS INTRANS
+dangle:dangles:dangling:dangled:dangled | TRANS INTRANS
+date:dates:dating:dated:dated | TRANS INTRANS
+die:dies:dying:died:died | TRANS INTRANS
+dine:dines:dining:dined:dined | INTRANS
+drain:drains:draining:drained:drained | TRANS INTRANS
+drown:drowns:drowning:drowned:drowned | TRANS INTRANS
+dry:dries:drying:dried:dried | TRANS INTRANS
+dump:dumps:drumping:dumped:dumped | TRANS INTRANS
+execute:executes:executing:executed:executed | TRANS INTRANS
+fall:falls:falling:fell:fallen | INTRANS
+fling:flings:flinging:flung:flung | TRANS INTRANS
+flood:floods:flooding:flooded:flooded | TRANS INTRANS
+fortify:fortifies:fortifying:fortified:fortified | TRANS INTRANS
+freeze:freezes:freezing:froze:frozen | TRANS INTRANS
+garnish:garnishes:garnishing:garnished:garnished | TRANS INTRANS
+gift:gifts:gifting:gifted:gifted | TRANS INTRANS
+glide:glides:gliding:glided:glided | TRANS INTRANS
+glimmer:glimmers:glimmering:glimmered:glimmered | TRANS INTRANS
+gorge:gorges:gorging:gorged:gorged | TRANS INTRANS
+grill:grills:grilling:grilled:grilled | TRANS INTRANS
+grind:grinds:grinding:grinded:grinded | TRANS INTRANS
+growl:growls:growling:growled:growled | TRANS INTRANS
+guard:guards:guarding:guarded:guarded | TRANS INTRANS
+harvest:harvests:harvesting:harvested:harvested | TRANS INTRANS
+hate:hates:hating:hated:hated | TRANS INTRANS
+haunt:haunts:haunting:haunted:haunted | TRANS INTRANS
+hop:hops:hopping:hopped:hopped | INTRANS
+hoist:hoists:hoisting:hoisted:hoisted | TRANS INTRANS
+hug:hugs:hugging:hugged:hugged | TRANS INTRANS
+kiss:kisses:kissing:kissed:kissed | TRANS INTRANS
+joke:jokes:joking:joked:joked | INTRANS
+knit:knits:knitting:knitted:knitted | TRANS INTRANS
+leak:leaks:leaking:leaked:leaked | INTRANS
+listen:listens:listening:listened:listened | INTRANS
+negate:negates:negating:negated:negated | TRANS INTRANS
+nibble:nibbles:nibbling:nibbled:nibbled | TRANS INTRANS
+nurture:nurtures:nurturing:nurtured:nurtered | TRANS INTRANS
+pack:packs:packing:packed:packed | TRANS INTRANS
+pad:pads:padding:padded:padded | TRANS INTRANS
+paint:paints:painting:painted:painted | TRANS INTRANS
+plant:plants:planting:planted:planted | TRANS INTRANS
+pull:pulls:pulling:pulled:pulled | TRANS INTRANS
+rake:rakes:raking:raked:raked | TRANS INTRANS
+rampage:rampages:rampaging:rampaged:rampaged | TRANS INTRANS
+ransack:ransacks:ransacking:ransacked:ransacked | TRANS INTRANS
+rip:rips:ripping:ripped:ripped | TRANS INTRANS
+scold:scolds:scolding:scolded:scolded | TRANS INTRANS
+scream:screams:screaming:screamed:screamed | INTRANS
+sever:severs:severing:severed:severed | TRANS INTRANS
+shield:shields:shielding:shielded:shielded | TRANS INTRANS
+siege:sieges:sieging:sieged:sieged | TRANS INTRANS
+silence:silences:silencing:silenced:silenced | TRANS INTRANS
+slit:slits:slitting:slitted:slitted | TRANS INTRANS
+smash:smashes:smashing:smashed:smashed | TRANS INTRANS
+slither:slithers:slithering:slithered:slithered | INTRANS
+rape:rapes:raping:raped:raped | TRANS INTRANS
+grip:grips:gripping:gripped:gripped | TRANS INTRANS
+
